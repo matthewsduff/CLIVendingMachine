@@ -1,24 +1,24 @@
 package com.techelevator;
 
-public class Snack {
+public class PurchasedSnacks {
 
 		private String itemLocation;
 		private String itemName;
 		private double itemPrice;
 		private String itemType;
 		private int itemQty;
-		private int soldItem;
+		private int purchaseItem;
 		
-		public int getSoldItem() {
-			return this.itemQty = this.itemQty-1;
+		public int getPurchaseItem() {
+			return this.itemQty = this.itemQty+1;
 		}
-
-		public Snack(String itemLocation, String itemName, double itemPrice, String itemType) {
+		
+		public PurchasedSnacks(String itemLocation, String itemName, double itemPrice, String itemType) {
 			this.itemLocation = itemLocation;
 			this.itemName = itemName;
 			this.itemPrice = itemPrice;
 			this.itemType = itemType;
-			itemQty = 5;
+			this.itemQty = 0;
 		}
 
 		public String getItemLocation() {

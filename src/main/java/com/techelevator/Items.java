@@ -10,38 +10,59 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import com.techelevator.Snack;
+import com.techelevator.PurchasedSnacks;
 
 public class Items {
 	public static void main(String[] args) throws FileNotFoundException {
 
 		
 		
-	File itemList = new File("vendingmachine.csv"); 
+	File itemList = new File("vendingmachine.csv"); // import vending machine list.csv
 
-		List<String> seperateItemLists = null;
+		List<String> seperateItemLists = null; //  creating list that will populate from the csv file
+		List<String> typeList = new ArrayList<String>(); //creating list that will populate from the csv file
 		
-		List<String> typeList = new ArrayList<String>();
-		Map locationMap = new LinkedHashMap();
-		Map priceMap = new LinkedHashMap();
-		List<Snack> loadedMachine = new ArrayList<Snack>();
+		List<Snack> loadedMachine = new ArrayList<Snack>(); // creating the loaded vending machine
+		List<PurchasedSnacks> purchasedItems = new ArrayList<PurchasedSnacks>(); // creating empty vending machine
 		
-	try (Scanner fileScan = new Scanner(itemList)) { 
-		while (fileScan.hasNextLine()) {
+	try (Scanner fileScan = new Scanner(itemList)) {  // starts scanner to go through csv file
+		while (fileScan.hasNextLine()) { // checking for next line in csv
 			
-			String itemString = fileScan.nextLine();
-			String[] item = itemString.split("\\|");
+			String itemString = fileScan.nextLine(); // creates string from csv line
+			String[] item = itemString.split("\\|"); // splits it on the "|"s
 			
-			seperateItemLists = Arrays.asList(item); 
+			seperateItemLists = Arrays.asList(item); // adds the split items to list
 		
-			Double price = Double.parseDouble(item[2]);
-			Snack snack = new Snack(item[0],item[1],price,item[3]);
+			Double price = Double.parseDouble(item[2]); // parses the string price into a double
+			Snack snack = new Snack(item[0],item[1],price,item[3]); // loads the snack class constructor
+			PurchasedSnacks pSnack = new PurchasedSnacks(item[0],item[1],price,item[3]); // loads purchased constructor
 			
-			loadedMachine.add(snack);
+			loadedMachine.add(snack); // adds the snacks to the loaded machine
+			purchasedItems.add(pSnack); // creates empty "sold" items list
 		
 		}
 		
-		System.out.println(loadedMachine.get(0).getItemName());
-		System.out.println(loadedMachine.get(0).getItemLocation());
+		double total = 10;
+		System.out.println("enter item to purchase");
+		Scanner userInput = new Scanner(System.in);
+		String newItem = userInput.nextLine();
+		for (int i = 0; i < loadedMachine.size(); i++) {
+			if (newItem.equals(loadedMachine.get(i).getItemLocation())){
+				System.out.println("Item found");
+				System.out.println(loadedMachine.get(i).getItemQty());
+				loadedMachine.get(i).getSoldItem();
+				System.out.println(loadedMachine.get(i).getItemQty());
+				System.out.println(loadedMachine.get(i).getItemName());
+				System.out.println(loadedMachine.get(i).getItemQty());
+				
+				purchasedItems.get(i).getPurchaseItem();
+				System.out.println(purchasedItems.get(i).getItemQty());
+			total = total - purchasedItems.get(i).getItemPrice(); 
+			System.out.println(total);
+			}
+			
+		}
+		
 		
 		
 		
