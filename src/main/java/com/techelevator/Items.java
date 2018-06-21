@@ -16,7 +16,7 @@ public class Items {
 
 		
 		
-	File itemList = new File("vendingmachine.csv"); {
+	File itemList = new File("vendingmachine.csv"); 
 
 		List<String> seperateItemLists = null;
 		
@@ -49,7 +49,5 @@ public class Items {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-	
-	
-}}
-}
+	} 
+	}
