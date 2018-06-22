@@ -10,12 +10,7 @@ public class PurchasedSnacks {
 		private int purchaseItem;
 		private int consumeItem;
 		
-		public int getPurchaseItem() {
-			return this.itemQty = this.itemQty+1;
-		}
-		public int getConsumeItem() {
-			return this.itemQty = this.itemQty-1;
-		}
+		
 		
 		public PurchasedSnacks(String itemLocation, String itemName, double itemPrice, String itemType) {
 			this.itemLocation = itemLocation;
@@ -23,6 +18,13 @@ public class PurchasedSnacks {
 			this.itemPrice = itemPrice;
 			this.itemType = itemType;
 			this.itemQty = 0;
+		}
+		
+		public int getPurchaseItem() {
+			return this.itemQty = this.itemQty+1;
+		}
+		public int getConsumeItem() {
+			return this.itemQty = this.itemQty-1;
 		}
 
 		public String getItemLocation() {

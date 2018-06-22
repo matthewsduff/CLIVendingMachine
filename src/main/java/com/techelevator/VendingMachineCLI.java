@@ -122,10 +122,10 @@ public class VendingMachineCLI {
 
 				for (int i = 0; i < loadedMachine.size(); i++) {
 
-					// if (!newItem.equals(loadedMachine.get(i).getItemLocation())) {
+					 //if (!newItem.equals(loadedMachine.get(i).getItemLocation())) {
 
 					// notFound=true;
-					// }
+					//}
 					if (newItem.equals(loadedMachine.get(i).getItemLocation())) {
 
 						if (loadedMachine.get(i).getItemQty() == 0) {
@@ -217,7 +217,11 @@ public class VendingMachineCLI {
 
 				System.out.println("Your change is $" + df.format(usersCash));
 
+				
 				usersCash = usersCash * 100;
+				
+				usersCash = Math.round(usersCash);
+				
 
 				while (usersCash >= 25) {
 					usersCash = usersCash - 25;
@@ -228,13 +232,14 @@ public class VendingMachineCLI {
 					dimeCounter++;
 				}
 				while (usersCash >= 5) {
-					usersCash = usersCash - 5; // TODO Need to figure out why the machine isnt giving the right amount
-												// of nickel
+					usersCash = usersCash - 5; 
 					nickleCounter++;
 				}
+				System.out.println(usersCash);
 				while (usersCash < 5 && usersCash > 0) {
 					usersCash = usersCash - 1;
 					pennieCounter++;
+					usersCash = 0;
 				}
 
 				System.out.print("Quarters " + qtrCounter + " |");
