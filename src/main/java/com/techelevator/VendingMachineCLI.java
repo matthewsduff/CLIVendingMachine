@@ -85,10 +85,9 @@ public class VendingMachineCLI {
 					System.out.print(loadedMachine.get(i).getItemName() + " ");
 					System.out.print("$" + loadedMachine.get(i).getItemPrice() + " ");
 					System.out.println("QTY:" + loadedMachine.get(i).getItemQty());
-					System.out.println();
-					System.out.println("Current Balance $ " + df.format(usersCash));
-
 				}
+				System.out.println();
+				System.out.println("Current Balance $ " + df.format(usersCash));
 			} else if (choice.equals(MAIN_MENU_OPTION_FEED_MONEY)) {
 
 				Scanner userCashInput = new Scanner(System.in);
