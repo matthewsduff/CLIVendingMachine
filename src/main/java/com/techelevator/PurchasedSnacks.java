@@ -24,7 +24,11 @@ public class PurchasedSnacks {
 			return this.itemQty = this.itemQty+1;
 		}
 		public int getConsumeItem() {
+			
+			if (this.itemQty >=1) {
 			return this.itemQty = this.itemQty-1;
+			}
+			else return this.itemQty;
 		}
 
 		public String getItemLocation() {
