@@ -1,14 +1,22 @@
 package com.techelevator;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;  
+import java.time.LocalDateTime;   
 
 import com.techelevator.view.Menu;
 
@@ -27,8 +35,15 @@ public class VendingMachineCLI {
 	List<Snack> loadedMachine = new ArrayList<Snack>(); // creating the loaded vending machine
 	List<PurchasedSnacks> purchasedItems = new ArrayList<PurchasedSnacks>(); // creating empty vending machine
 	double usersCash = 0;
+	double startingCash = usersCash;
 	DecimalFormat df = new DecimalFormat("0.00");
 	File itemList = new File("vendingmachine.csv");
+	//File file = new File("log.txt");
+	
+	 SimpleDateFormat dtf = new SimpleDateFormat ("MM/dd/yyyy HH:mm:ss a");  
+	 Date now = new Date();
+	 String strDate = dtf.format(now);
+	
 	{
 
 		try (Scanner fileScan = new Scanner(itemList)) { // starts scanner to go through csv file
@@ -67,7 +82,7 @@ public class VendingMachineCLI {
 	public void run() {
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
-
+			double usersChoice;
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				for (int i = 0; i < loadedMachine.size(); i++) {
 					System.out.print(loadedMachine.get(i).getItemLocation() + " ");
@@ -77,7 +92,9 @@ public class VendingMachineCLI {
 
 				}
 			} else if (choice.equals(MAIN_MENU_OPTION_FEED_MONEY)) {
-
+				
+				
+				
 				Scanner userCashInput = new Scanner(System.in);
 				System.out.println("Please feed dollars into the vending machine");
 				System.out.println("you may only enter whole dollar amounts i.e. 1, 5, 10, or 20");
@@ -87,8 +104,20 @@ public class VendingMachineCLI {
 					System.out.println("you may only enter whole dollar amounts i.e. 1, 5, 10, or 20");
 
 				}
-				usersCash = usersCash + Double.parseDouble(userCashInput.next());
-				System.out.println("Cash in $" + df.format(usersCash));
+				usersChoice = Double.parseDouble(userCashInput.next());
+				usersCash = usersCash + usersChoice;
+				System.out.println("Cash in $" + df.format(usersCash)); 
+				
+				try (FileWriter writer = new FileWriter("log.txt", true)) {
+					writer.write(strDate + " FEED MONEY:\t$" + df.format(usersChoice) +"\t"+ "$"+df.format(usersCash) + "\n" );
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				
 
 			}
 
@@ -98,6 +127,7 @@ public class VendingMachineCLI {
 				System.out.println("enter item to purchase");
 				Scanner userInput = new Scanner(System.in);
 				String newItem = userInput.nextLine();
+				double usersStart = usersCash;
 				
 				for (int i = 0; i < loadedMachine.size(); i++) {
 
@@ -123,15 +153,25 @@ public class VendingMachineCLI {
 							usersCash = usersCash - purchasedItems.get(i).getItemPrice();
 							System.out.println("Remaing balance = $" + df.format(usersCash));
 							
+							try (FileWriter writer = new FileWriter("log.txt", true)) {
+								writer.write(strDate +" "+ loadedMachine.get(i).getItemName() +" "+ loadedMachine.get(i).getItemLocation()  +" "+ "$"+df.format(usersStart) +"\t"+ "$"+ df.format(usersCash)+ "\n");
+								writer.flush();
+								writer.close();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+							
+							
+							
+							
 						}
 
 					}
-
+					
 				}
-				//if (notFound == true) {
-				//	System.out.println("Ivalid location");
-				//	notFound = false;
-				//}
+				
 			}
 			else if (choice.equals(MAIN_MENU_OPTION_FINISH_TRANSACTION)) {
 				int qtrCounter = 0;
