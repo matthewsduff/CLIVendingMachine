@@ -8,9 +8,13 @@ public class PurchasedSnacks {
 		private String itemType;
 		private int itemQty;
 		private int purchaseItem;
+		private int consumeItem;
 		
 		public int getPurchaseItem() {
 			return this.itemQty = this.itemQty+1;
+		}
+		public int getConsumeItem() {
+			return this.itemQty = this.itemQty-1;
 		}
 		
 		public PurchasedSnacks(String itemLocation, String itemName, double itemPrice, String itemType) {
