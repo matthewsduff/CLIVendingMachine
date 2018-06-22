@@ -17,6 +17,16 @@ public class Items {
 
 		
 		
+		//NOT IN USE
+		//            NOT IN USE
+		//					NOT IN USE
+		//								NOT IN USE
+		//NOT IN USE
+		//		NOT IN USE
+		//			NOT IN USE
+		//				NOT IN USE
+		//						NOT IN USE
+		
 	File itemList = new File("vendingmachine.csv"); // import vending machine list.csv
 
 		List<String> seperateItemLists = null; //  creating list that will populate from the csv file
