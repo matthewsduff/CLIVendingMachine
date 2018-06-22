@@ -28,16 +28,16 @@ public class VendingMachineCLI {
 
 	List<Snack> loadedMachine = new ArrayList<Snack>(); // creating the loaded vending machine
 	List<PurchasedSnacks> purchasedItems = new ArrayList<PurchasedSnacks>(); // creating empty vending machine
-	
-	double usersCash = 0; // variable for users funds after feeding in "cash"
-	double startingCash = usersCash; // variable used in the log.txt printout 
 
-	DecimalFormat df = new DecimalFormat("0.00"); // money formatter
-	File itemList = new File("vendingmachine.csv"); // import item list
+	double usersCash = 0;
+	double startingCash = usersCash;
 
-	SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss a"); // date formatter
-	Date now = new Date(); // setting date
-	String strDate = dtf.format(now); 
+	DecimalFormat df = new DecimalFormat("0.00");
+	File itemList = new File("vendingmachine.csv");
+
+	SimpleDateFormat dtf = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss a");
+	Date now = new Date();
+	String strDate = dtf.format(now);
 
 	{
 
@@ -59,14 +59,16 @@ public class VendingMachineCLI {
 
 			}
 
+			// System.out.println(loadedMachine.get(0).getItemName());
+			// System.out.println(loadedMachine.get(0).getItemLocation());
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block SHOULD WE DO ANYTHING WITH THESE?????
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	private Menu menu; 
+	private Menu menu;
 
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
@@ -77,16 +79,16 @@ public class VendingMachineCLI {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 			double usersChoice;
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				for (int i = 0; i < loadedMachine.size(); i++) { // loops through snack list and displays the snacks
+				for (int i = 0; i < loadedMachine.size(); i++) {
 					System.out.print(loadedMachine.get(i).getItemLocation() + " ");
 					System.out.print(loadedMachine.get(i).getItemName() + " ");
 					System.out.print("$" + loadedMachine.get(i).getItemPrice() + " ");
 					System.out.println("QTY:" + loadedMachine.get(i).getItemQty());
 
 				}
-			} else if (choice.equals(MAIN_MENU_OPTION_FEED_MONEY)) { // feed the machine money
+			} else if (choice.equals(MAIN_MENU_OPTION_FEED_MONEY)) {
 
-				Scanner userCashInput = new Scanner(System.in); // scanner for user input
+				Scanner userCashInput = new Scanner(System.in);
 				System.out.println("Please feed dollars into the vending machine");
 				System.out.println("you may only enter whole dollar amounts i.e. 1, 2, 5, 10, or 20");
 
@@ -95,86 +97,90 @@ public class VendingMachineCLI {
 					System.out.println("you may only enter whole dollar amounts i.e. 1, 2, 5, 10, or 20");
 
 				}
-				usersChoice = Double.parseDouble(userCashInput.next()); // changes userinput to double
-				usersCash = usersCash + usersChoice; // adds user inout to usersCash
-				System.out.println("Cash in $" + df.format(usersCash)); // display balance
+				usersChoice = Double.parseDouble(userCashInput.next());
+				usersCash = usersCash + usersChoice;
+				System.out.println("Cash in $" + df.format(usersCash));
 
-				try (FileWriter writer = new FileWriter("log.txt", true)) { // logs fed money
+				try (FileWriter writer = new FileWriter("log.txt", true)) {
 					writer.write(strDate + " FEED MONEY:\t$" + df.format(usersChoice) + "\t" + "$"
 							+ df.format(usersCash) + "\n");
 
 				} catch (IOException e) {
-					
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				userCashInput.close();
+
 			}
 
 			else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 
-				
+				boolean notFound = false;
 				System.out.println("enter item to purchase");
-				Scanner userInput = new Scanner(System.in); // scanner for item selection
+				Scanner userInput = new Scanner(System.in);
 				String newItem = userInput.nextLine();
-				double usersStart = usersCash; // for log.txt
+				double usersStart = usersCash;
 
-				for (int i = 0; i < loadedMachine.size(); i++) { // loop looking for selected item
+				for (int i = 0; i < loadedMachine.size(); i++) {
 
+					 //if (!newItem.equals(loadedMachine.get(i).getItemLocation())) {
+
+					// notFound=true;
+					//}
 					if (newItem.equals(loadedMachine.get(i).getItemLocation())) {
 
-						if (loadedMachine.get(i).getItemQty() == 0) { // if qty is zero then sold out
+						if (loadedMachine.get(i).getItemQty() == 0) {
 							System.out.println("SOLD OUT");
-							System.out.println("Remaing balance = $" + df.format(usersCash)); // return user balance
+							System.out.println("Remaing balance = $" + df.format(usersCash));
 						}
 
-						if (loadedMachine.get(i).getItemPrice() > usersCash) { // test for user being broke
-							System.out.println("Insufficient funds"); 
-							System.out.println("Remaing balance = $" + df.format(usersCash)); 
+						if (loadedMachine.get(i).getItemPrice() > usersCash) {
+							System.out.println("Insufficient funds");
+							System.out.println("Remaing balance = $" + df.format(usersCash));
 						}
 
 						if (loadedMachine.get(i).getItemQty() > 0 && usersCash > loadedMachine.get(i).getItemPrice()) {
 							loadedMachine.get(i).getSoldItem();
-							purchasedItems.get(i).getPurchaseItem(); // if item isn't sold out and user has money
-							usersCash = usersCash - purchasedItems.get(i).getItemPrice(); // deduct money
+							purchasedItems.get(i).getPurchaseItem();
+							usersCash = usersCash - purchasedItems.get(i).getItemPrice();
 							System.out.println("Remaing balance = $" + df.format(usersCash));
 
-							try (FileWriter writer = new FileWriter("log.txt", true)) { // write to log.txt
+							try (FileWriter writer = new FileWriter("log.txt", true)) {
 								writer.write(strDate + " " + loadedMachine.get(i).getItemName() + " "
 										+ loadedMachine.get(i).getItemLocation() + " " + "$" + df.format(usersStart)
 										+ "\t" + "$" + df.format(usersCash) + "\n");
 								writer.flush();
 								writer.close();
 							} catch (IOException e) {
-								
+								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 
 						}
 
 					}
-					userInput.close();
+
 				}
 
 			} else if (choice.equals(MAIN_MENU_OPTION_FINISH_TRANSACTION)) {
 				
-				double totalSales = 0; // used for total sale log
-				double itemSale = 0; // used to count sales for sale log
+				double totalSales = 0;
+				double itemSale = 0;
 				try (FileWriter writer = new FileWriter("TotalSales.txt",true)) {
 					
-					writer.write("SALES REPORT: " + strDate ); // begin writing
+					writer.write("SALES REPORT: " + strDate );
 					writer.write("\r");
 					writer.write("\r");
 					writer.flush();
 
 				} catch (IOException e) {
-					
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
-				for (int i = 0; i < purchasedItems.size(); i++) { // loop for sales report
+				for (int i = 0; i < purchasedItems.size(); i++) {
 					
 					itemSale = (purchasedItems.get(i).getItemQty() * purchasedItems.get(i).getItemPrice());
-					totalSales += itemSale; // add item sales to total sales
+					totalSales += itemSale;
 					
 					try (FileWriter writer = new FileWriter("TotalSales.txt", true)) {
 						writer.write(purchasedItems.get(i).getItemName() + " | " + purchasedItems.get(i).getItemQty() + "\r");
@@ -198,7 +204,7 @@ public class VendingMachineCLI {
 				}
 				
 				
-				// variables for change machine
+				
 				int qtrCounter = 0;
 				int dimeCounter = 0;
 				int nickleCounter = 0;
@@ -243,9 +249,9 @@ public class VendingMachineCLI {
 				System.out.println();
 				System.out.println("Enjoy your Snacks!");
 
-				for (int i = 0; i < purchasedItems.size(); i++) { // looping through sold items to check qty
+				for (int i = 0; i < purchasedItems.size(); i++) {
 
-					for (int j = 0; j <= purchasedItems.get(i).getItemQty(); j++) { // if qty > 0, checks the type and makes the correct noise
+					for (int j = 0; j <= purchasedItems.get(i).getItemQty(); j++) {
 						if (purchasedItems.get(i).getItemQty() > 0) {
 
 							if (purchasedItems.get(i).getItemType().equals("Chip")) {
