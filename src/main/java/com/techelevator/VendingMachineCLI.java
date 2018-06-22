@@ -88,6 +88,7 @@ public class VendingMachineCLI {
 				}
 				System.out.println();
 				System.out.println("Current Balance $ " + df.format(usersCash));
+			
 			} else if (choice.equals(MAIN_MENU_OPTION_FEED_MONEY)) {
 
 				Scanner userCashInput = new Scanner(System.in);
@@ -111,7 +112,6 @@ public class VendingMachineCLI {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 			}
 
 			else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
@@ -124,14 +124,14 @@ public class VendingMachineCLI {
 
 				for (int i = 0; i < loadedMachine.size(); i++) {
 
-					 //if (!newItem.equals(loadedMachine.get(i).getItemLocation())) {
+					 if (!newItem.equals(loadedMachine.get(i).getItemLocation())) {
 
-					// notFound=true;
-					//}
+					 notFound=true;
+					}
 					if (newItem.equals(loadedMachine.get(i).getItemLocation())) {
 
 						if (loadedMachine.get(i).getItemQty() == 0) {
-							System.out.println("SOLD OUT");
+							System.out.println("!!! SOLD OUT !!!");
 							System.out.println("Remaing balance = $" + df.format(usersCash));
 						}
 
@@ -205,17 +205,10 @@ public class VendingMachineCLI {
 					e.printStackTrace();
 				}
 				
-				
-				
 				int qtrCounter = 0;
 				int dimeCounter = 0;
 				int nickleCounter = 0;
 				int pennieCounter = 0;
-
-				String chipSound = "Crunch Crunch, Yum!";
-				String candySound = "Munch Munch, MMMmmmm!";
-				String drinkSound = "Glug Glug, AHHhhh!";
-				String gumSound = "Chew Chew, Yum!";
 
 				System.out.println("Your change is $" + df.format(usersCash));
 
@@ -250,6 +243,11 @@ public class VendingMachineCLI {
 				System.out.print(" Pennies " + pennieCounter);
 				System.out.println();
 				System.out.println("Enjoy your Snacks!");
+				
+				String chipSound = "Crunch Crunch, Yum!";
+				String candySound = "Munch Munch, MMMmmmm!";
+				String drinkSound = "Glug Glug, AHHhhh!";
+				String gumSound = "Chew Chew, Yum!";
 
 				for (int i = 0; i < purchasedItems.size(); i++) {
 
@@ -258,27 +256,20 @@ public class VendingMachineCLI {
 
 							if (purchasedItems.get(i).getItemType().equals("Chip")) {
 								System.out.println(chipSound);
-
 							}
 							if (purchasedItems.get(i).getItemType().equals("Candy")) {
 								System.out.println(candySound);
-
 							}
 							if (purchasedItems.get(i).getItemType().equals("Drink")) {
 								System.out.println(drinkSound);
-
 							}
 							if (purchasedItems.get(i).getItemType().equals("Gum")) {
 								System.out.println(gumSound);
-
 							}
-
 							purchasedItems.get(i).getConsumeItem();
 						}
 					}
-
 				}
-
 			}
 		}
 	}
