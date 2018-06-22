@@ -42,7 +42,28 @@ public class Items {
 		
 		}
 		
-		double total = 10;
+		double usersCash = 0;
+		
+		Scanner userCashInput = new Scanner(System.in);
+		System.out.println("Please feed dollars into the vending machine");
+		System.out.println("you may only enter whole dollar amounts i.e. 1, 5, 10, or 20");
+		
+		
+		
+		while (!userCashInput.hasNext("[1 2 5 10 20]")) { // dollar validation
+			userCashInput.next();
+			System.out.println("you may only enter whole dollar amounts i.e. 1, 5, 10, or 20");
+		
+		usersCash = usersCash + Double.parseDouble(userCashInput.next());
+		}
+		System.out.println("Cash in $" + usersCash+"0");
+		System.out.println("Add more cash or 'done' to select items to purchase");
+		
+		
+		
+		
+		
+		
 		System.out.println("enter item to purchase");
 		Scanner userInput = new Scanner(System.in);
 		String newItem = userInput.nextLine();
@@ -57,8 +78,7 @@ public class Items {
 				
 				purchasedItems.get(i).getPurchaseItem();
 				System.out.println(purchasedItems.get(i).getItemQty());
-			total = total - purchasedItems.get(i).getItemPrice(); 
-			System.out.println(total);
+			 
 			}
 			
 		}
