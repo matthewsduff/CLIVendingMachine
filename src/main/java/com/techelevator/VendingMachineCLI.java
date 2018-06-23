@@ -126,6 +126,7 @@ public class VendingMachineCLI {
 						if (loadedMachine.get(i).getItemQty() == 0) {
 							System.out.println("!!! SOLD OUT !!!");
 							System.out.println("Remaing balance = $" + df.format(usersCash));
+							notFound = false;
 						}
 
 						if (loadedMachine.get(i).getItemPrice() > usersCash) {
