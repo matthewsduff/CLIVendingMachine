@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import com.techelevator.ChangeMachine;
 
 import com.techelevator.view.Menu;
 
@@ -130,8 +131,9 @@ public class VendingMachineCLI {
 						}
 
 						if (loadedMachine.get(i).getItemPrice() > usersCash) {
-							System.out.println("Insufficient funds");
+							System.out.println("!!! Insufficient funds!!! ");
 							System.out.println("Remaing balance = $" + df.format(usersCash));
+							notFound = false;
 						}
 
 						if (loadedMachine.get(i).getItemQty() > 0 && usersCash > loadedMachine.get(i).getItemPrice()) {
@@ -210,6 +212,10 @@ public class VendingMachineCLI {
 				usersCash = usersCash * 100;
 
 				usersCash = Math.round(usersCash);
+				
+				
+				ChangeMachine changeMaker = new ChangeMachine();
+				
 
 				while (usersCash >= 25) {
 					usersCash = usersCash - 25;
