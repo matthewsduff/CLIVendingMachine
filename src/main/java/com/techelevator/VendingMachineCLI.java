@@ -202,21 +202,32 @@ public class VendingMachineCLI {
 					e.printStackTrace();
 				}
 
-				int qtrCounter = 0;
-				int dimeCounter = 0;
-				int nickleCounter = 0;
-				int pennieCounter = 0;
-
+				
+				System.out.println();
 				System.out.println("Your change is $" + df.format(usersCash));
 
 				usersCash = usersCash * 100;
 
 				usersCash = Math.round(usersCash);
 				
-				
 				ChangeMachine changeMaker = new ChangeMachine();
 				
+				changeMaker.getCashIn(usersCash);
+				changeMaker.getChangeCalculator(changeMaker.getBalance());
+		
+				System.out.print("Quarters " + changeMaker.getQtrCounter() + " |");
+				System.out.print(" Dimes " + changeMaker.getDimeCounter() + " |");
+				System.out.print(" Nickles " + changeMaker.getNickleCounter() + " |");
+				
+				usersCash = 0;
+			
+				
+				/*	int qtrCounter = 0;
+				int dimeCounter = 0;
+				int nickleCounter = 0;
+				int pennieCounter = 0;
 
+				
 				while (usersCash >= 25) {
 					usersCash = usersCash - 25;
 					qtrCounter++;
@@ -234,12 +245,12 @@ public class VendingMachineCLI {
 					usersCash = usersCash - 1;
 					pennieCounter++;
 					usersCash = 0;
-				}
+				} 
 
 				System.out.print("Quarters " + qtrCounter + " |");
 				System.out.print(" Dimes " + dimeCounter + " |");
 				System.out.print(" Nickles " + nickleCounter + " |");
-				System.out.print(" Pennies " + pennieCounter);
+				System.out.print(" Pennies " + pennieCounter); */
 				System.out.println();
 				System.out.println();
 				System.out.println("Enjoy your Snacks!");
