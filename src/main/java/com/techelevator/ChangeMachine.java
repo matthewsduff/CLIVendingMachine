@@ -2,19 +2,17 @@ package com.techelevator;
 
 public class ChangeMachine {
 
-		private double getCashIn;
+		private double CashIn;
 		private int qtrCounter = 0;
 		private int dimeCounter = 0;
 		private int nickleCounter = 0;
 		private int pennieCounter = 0;
-	
-	
 		private double changeCalculator;
 		private double balance;
 		
 		
-		public double getCashIn(double getCashIn) {
-			return this.balance = getCashIn;
+		public double getCashIn(double CashIn) {
+			return this.balance = CashIn;
 		}
 		
 		public double getBalance() {
