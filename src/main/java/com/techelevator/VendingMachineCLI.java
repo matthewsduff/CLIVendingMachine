@@ -60,9 +60,6 @@ public class VendingMachineCLI {
 
 			}
 
-			// System.out.println(loadedMachine.get(0).getItemName());
-			// System.out.println(loadedMachine.get(0).getItemLocation());
-
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -88,7 +85,7 @@ public class VendingMachineCLI {
 				}
 				System.out.println();
 				System.out.println("Current Balance $ " + df.format(usersCash));
-			
+
 			} else if (choice.equals(MAIN_MENU_OPTION_FEED_MONEY)) {
 
 				Scanner userCashInput = new Scanner(System.in);
@@ -116,18 +113,14 @@ public class VendingMachineCLI {
 
 			else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 
-				boolean notFound = false;
+				boolean notFound = true;
 				System.out.println("enter item to purchase");
 				Scanner userInput = new Scanner(System.in);
-				String newItem = userInput.nextLine();
+				String newItem = userInput.nextLine().toUpperCase();
 				double usersStart = usersCash;
 
 				for (int i = 0; i < loadedMachine.size(); i++) {
 
-					 if (!newItem.equals(loadedMachine.get(i).getItemLocation())) {
-
-					 notFound=true;
-					}
 					if (newItem.equals(loadedMachine.get(i).getItemLocation())) {
 
 						if (loadedMachine.get(i).getItemQty() == 0) {
@@ -145,6 +138,7 @@ public class VendingMachineCLI {
 							purchasedItems.get(i).getPurchaseItem();
 							usersCash = usersCash - purchasedItems.get(i).getItemPrice();
 							System.out.println("Remaing balance = $" + df.format(usersCash));
+							notFound = false;
 
 							try (FileWriter writer = new FileWriter("log.txt", true)) {
 								writer.write(strDate + " " + loadedMachine.get(i).getItemName() + " "
@@ -156,20 +150,19 @@ public class VendingMachineCLI {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-
 						}
-
 					}
-
 				}
-
+				if (notFound == true) {
+					System.out.println("!!! Item Not Found !!!");
+				}
 			} else if (choice.equals(MAIN_MENU_OPTION_FINISH_TRANSACTION)) {
-				
+
 				double totalSales = 0;
 				double itemSale = 0;
-				try (FileWriter writer = new FileWriter("TotalSales.txt",true)) {
-					
-					writer.write("SALES REPORT: " + strDate );
+				try (FileWriter writer = new FileWriter("TotalSales.txt", true)) {
+
+					writer.write("SALES REPORT: " + strDate);
 					writer.write("\r");
 					writer.write("\r");
 					writer.flush();
@@ -178,24 +171,25 @@ public class VendingMachineCLI {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 				for (int i = 0; i < purchasedItems.size(); i++) {
-					
+
 					itemSale = (purchasedItems.get(i).getItemQty() * purchasedItems.get(i).getItemPrice());
 					totalSales += itemSale;
-					
+
 					try (FileWriter writer = new FileWriter("TotalSales.txt", true)) {
-						writer.write(purchasedItems.get(i).getItemName() + " | " + purchasedItems.get(i).getItemQty() + "\r");
-						
+						writer.write(purchasedItems.get(i).getItemName() + " | " + purchasedItems.get(i).getItemQty()
+								+ "\r");
+
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
+
 				}
-				try (FileWriter writer = new FileWriter("TotalSales.txt",true)) {
+				try (FileWriter writer = new FileWriter("TotalSales.txt", true)) {
 					writer.write("\r");
-					writer.write("** TOTAL SALES ** $"+df.format(totalSales));
+					writer.write("** TOTAL SALES ** $" + df.format(totalSales));
 					writer.write("\r");
 					writer.write("\r");
 					writer.flush();
@@ -204,7 +198,7 @@ public class VendingMachineCLI {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+
 				int qtrCounter = 0;
 				int dimeCounter = 0;
 				int nickleCounter = 0;
@@ -212,11 +206,9 @@ public class VendingMachineCLI {
 
 				System.out.println("Your change is $" + df.format(usersCash));
 
-				
 				usersCash = usersCash * 100;
-				
+
 				usersCash = Math.round(usersCash);
-				
 
 				while (usersCash >= 25) {
 					usersCash = usersCash - 25;
@@ -227,10 +219,10 @@ public class VendingMachineCLI {
 					dimeCounter++;
 				}
 				while (usersCash >= 5) {
-					usersCash = usersCash - 5; 
+					usersCash = usersCash - 5;
 					nickleCounter++;
 				}
-				System.out.println(usersCash);
+
 				while (usersCash < 5 && usersCash > 0) {
 					usersCash = usersCash - 1;
 					pennieCounter++;
@@ -242,8 +234,9 @@ public class VendingMachineCLI {
 				System.out.print(" Nickles " + nickleCounter + " |");
 				System.out.print(" Pennies " + pennieCounter);
 				System.out.println();
+				System.out.println();
 				System.out.println("Enjoy your Snacks!");
-				
+
 				String chipSound = "Crunch Crunch, Yum!";
 				String candySound = "Munch Munch, MMMmmmm!";
 				String drinkSound = "Glug Glug, AHHhhh!";
