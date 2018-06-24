@@ -263,7 +263,7 @@ public class VendingMachineCLI {
 				for (int i = 0; i < purchasedItems.size(); i++) {
 
 					for (int j = 0; j <= purchasedItems.get(i).getItemQty(); j++) {
-						if (purchasedItems.get(i).getItemQty() > 0) {
+						while (purchasedItems.get(i).getItemQty() > 0) {
 
 							if (purchasedItems.get(i).getItemType().equals("Chip")) {
 								System.out.println(chipSound);
