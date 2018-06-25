@@ -77,9 +77,9 @@ public class VendingMachineCLI {
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 			double usersChoice;
-			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
+			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) { // load the display
 				for (int i = 0; i < loadedMachine.size(); i++) {
-					System.out.print(loadedMachine.get(i).getItemLocation() + " ");
+					System.out.print(loadedMachine.get(i).getItemLocation() + " ");  
 					System.out.print(loadedMachine.get(i).getItemName() + " ");
 					System.out.print("$" + loadedMachine.get(i).getItemPrice() + " ");
 					System.out.println("QTY:" + loadedMachine.get(i).getItemQty());
@@ -222,35 +222,7 @@ public class VendingMachineCLI {
 				usersCash = 0;
 			
 				
-				/*	int qtrCounter = 0;
-				int dimeCounter = 0;
-				int nickleCounter = 0;
-				int pennieCounter = 0;
-
 				
-				while (usersCash >= 25) {
-					usersCash = usersCash - 25;
-					qtrCounter++;
-				}
-				while (usersCash >= 10) {
-					usersCash = usersCash - 10;
-					dimeCounter++;
-				}
-				while (usersCash >= 5) {
-					usersCash = usersCash - 5;
-					nickleCounter++;
-				}
-
-				while (usersCash < 5 && usersCash > 0) {
-					usersCash = usersCash - 1;
-					pennieCounter++;
-					usersCash = 0;
-				} 
-
-				System.out.print("Quarters " + qtrCounter + " |");
-				System.out.print(" Dimes " + dimeCounter + " |");
-				System.out.print(" Nickles " + nickleCounter + " |");
-				System.out.print(" Pennies " + pennieCounter); */
 				System.out.println();
 				System.out.println();
 				System.out.println("Enjoy your Snacks!");
